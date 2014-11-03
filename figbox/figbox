@@ -1,0 +1,51 @@
+#! /usr/bin/env python
+
+""" 
+
+"""
+
+
+from math import ceil
+
+def build_box(data, vertical_border='|', horizontal_border='-', corner='+'):
+    data         = data.split('\n')
+    max_len      = max(map(len, data)) + 4
+
+    line         = '%s%s%s' % (corner, horizontal_border * max_len, corner)
+    blank        = '%s%s%s' % (vertical_border, ' ' * max_len, vertical_border)
+
+    margin_left  = lambda x: ' ' * int(ceil((max_len - len(x))/2.0))
+    margin_right = lambda x: ' ' * int(ceil((max_len - len(x))/2))
+
+    draw_border  = lambda x: '%s%s%s%s%s' % (vertical_border, 
+                                       margin_left(x), x, 
+                                       margin_right(x), vertical_border)
+    output       = '%s\n%s\n' % (line, blank)
+
+    for ind in data:
+        output = '%s%s\n' % (output, draw_border(ind))
+
+    output = '%s%s\n%s\n' % (output, blank, line)
+
+    return output
+        
+
+if __name__ == '__main__':
+    from optparse import OptionParser
+    parser   = OptionParser()
+    parser.add_option("-v", "--vertical-border", dest="vertical_border",
+                      metavar="string", default='|')
+
+    parser.add_option("-o", "--horizontal-border", dest="horizontal_border",
+                      metavar="string", default='-')
+        
+    parser.add_option("-c", "--corner", dest="corner",
+                      metavar="string", default='+')
+
+    (opt, args) = parser.parse_args()
+    print build_box(' '.join(args), opt.vertical_border, 
+                    opt.horizontal_border, opt.corner)
+
+
+
+

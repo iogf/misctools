@@ -1,0 +1,90 @@
+#! /usr/bin/env python
+
+"""
+Used to substitute files into template files.
+
+template
+
+    The file
+    $data.c$
+
+    and the file.
+
+    $alpha.c$
+
+
+This command would generate a file like.
+    into -s template -o done
+
+done
+
+    The file
+    int main(void) {
+        return 0;
+    }
+
+
+    int main(void) {
+        return 1;
+    }
+
+
+Where data.c is
+
+    int main(void) {
+        return 0;
+    }
+
+and alpha.c
+
+    int main(void) {
+        return 1;
+    }
+
+"""
+
+from re import sub
+from os.path import abspath
+
+def load_data(filename):
+    with open(filename, 'r') as fd:
+        return fd.read()
+
+if __name__ == '__main__':
+    from optparse import OptionParser
+    parser   = OptionParser()
+
+
+    parser.add_option("-s", "--source", dest="source",
+                      metavar="string")
+
+    parser.add_option("-c", "--command", dest="command",
+                      metavar="string")
+
+    parser.add_option("-o", "--output", dest="output",
+                      metavar="string")
+
+    parser.add_option("-r", "--regex", dest="regex",
+                      metavar="string", 
+                      default='\$(?P<filename>.+?)\$')
+    
+    (opt, args) = parser.parse_args()
+    data        = load_data(opt.source)    
+
+    def insert_file_data(match):
+        return load_data(abspath(match.group('filename')))
+
+    data = sub(opt.regex, insert_file_data, data)
+
+    with open(opt.output, 'w') as fd:
+        fd.write(data)
+
+    
+
+
+
+
+
+
+
+
