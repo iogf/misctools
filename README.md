@@ -45,7 +45,7 @@ A simple script to draw box around text.
     #                                                      #
     ########################################################
     
-    tau@spin:~$ figbox "$(figbox "`figlet -f standard COOl`" -v '#' -o '#' -c '#'<x "`figlet -f standard COOl`" -v '#' -o '#' -c '#')"
+    tau@spin:~$ figbox "$(figbox "`figlet -f standard COOl`" -v '#' -o '#' -c '#')"
 
     +------------------------------+
     |                              |
@@ -110,6 +110,7 @@ You can pass a regex to into as well.
     into -s template -o done -r '\{(?P<filename>.*?)\}' 
 
 would replace all filenames inside {} for their contents.
+
 
 
 
