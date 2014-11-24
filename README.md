@@ -112,6 +112,17 @@ You can pass a regex to into as well.
 would replace all filenames inside {} for their contents.
 
 
+wice
+====
+
+Pretending to be a browser with wget.
+
+wice -u https://chudq.wordpress.com/2009/01/24/my-favourite-vimperator-keys/ -o vimperator-keys.html
+
+
+
+
+
 
 
 
